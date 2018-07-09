@@ -7,8 +7,38 @@ int flag[9][9];
 
 
 
+
 //s[a][b]が数字として適しているかの判定
 bool h(int a, int b){
+    int x, y;
+    if(0 <= a && a <= 2){
+        x = 0;
+    }else if(3 <= a &&  a <= 5){
+        x = 3;
+    }else{
+        x = 6;
+    }
+    if(0 <= b && b <= 2){
+        y = 0;
+    }else if(3 <= b && b <= 5){
+        y = 3;
+    }else{
+        y = 6;
+    }
+
+    for(int i = 0; i < 9; i++){
+        if(s[a][i] == s[a][b] && i != b){
+            return false;
+        }
+        if(s[i][b] == s[a][b] && i != a){
+            return false;
+        }
+    }
+    for(int i = 0 + x; i <= 2 + x; i++){
+        for(int j = 0 + y; j <= 2 + y; j++){
+            if(s[i][j] == s[a][b] && i != a && j != b)return false;
+        }
+    }
     return true;
 }
 
@@ -16,6 +46,13 @@ bool h(int a, int b){
 
 //深さ優先探索
 int dfs(int a, int b){
+    cout << endl;
+    for(int i = 0; i < 9; i++){
+        for(int j = 0; j < 9; j++){
+            cout << s[i][j] << " ";
+        }
+        cout << endl;
+    }
     //s[a][b]が元からあった数字なら
     if(flag[a][b] != 1){
         //s[8][8]の場合
@@ -75,7 +112,7 @@ int dfs(int a, int b){
                     return dfs(a - x, y);
                 //もしbが0じゃなかったら
                 }else{
-                    int x = 0; y = 0;
+                    int x = 0, y = 1;
                     while(flag[a- x][b - y] == 0){
                         if(b - y == 0){
                             x++;
@@ -84,7 +121,9 @@ int dfs(int a, int b){
                             y++;
                         }
                     }
-                    return dfs[a - x][b - y];
+                    cout << endl << a << " " << x << " " << b << " " << y << endl;
+                    s[a - x][b - y]++; 
+                    return dfs(a - x, b - y);
                 }
                 
             }else{
@@ -119,7 +158,7 @@ int main(){
     //結果を出力
     for(int i = 0; i < 9; i++){
         for(int j = 0; j  < 9; j++){
-            cout << s[i][j];
+            cout << s[i][j] << " ";
         }
         cout << endl;
     }
