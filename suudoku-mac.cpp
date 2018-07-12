@@ -46,15 +46,20 @@ bool h(int a, int b){
 
 //深さ優先探索
 int dfs(int a, int b){
-    cout << endl;
-    for(int i = 0; i < 9; i++){
-        for(int j = 0; j < 9; j++){
-            cout << s[i][j] << " ";
+    if(s[a][b] ==10){
+        s[a][b] = 0;
+    
+    if(s[a][b] > 10){
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                cout << s[i][j] << " ";
+            }
+            cout << endl;
         }
-        cout << endl;
+        return 0;
     }
     //s[a][b]が元からあった数字なら
-    if(flag[a][b] != 1){
+    if(flag[a][b] == 1){
         //s[8][8]の場合
         if(b == 8 && a == 8){
             //処理を終了
@@ -109,6 +114,7 @@ int dfs(int a, int b){
                             y--;
                         }
                     }
+                    s[a - x][y]++;
                     return dfs(a - x, y);
                 //もしbが0じゃなかったら
                 }else{
@@ -121,7 +127,7 @@ int dfs(int a, int b){
                             y++;
                         }
                     }
-                    cout << endl << a << " " << x << " " << b << " " << y << endl;
+                    //cout << endl << a << " " << x << " " << b << " " << y << endl;
                     s[a - x][b - y]++; 
                     return dfs(a - x, b - y);
                 }
