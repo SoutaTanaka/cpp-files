@@ -43,11 +43,51 @@ bool h(int a, int b){
 }
 
 
-
+int www = 0;
 //深さ優先探索
 int dfs(int a, int b){
+    www++;
+    //cout << www << endl;
+    /*if(www % 1 == 0){
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                cout << s[i][j] << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+    }
+    */
     if(s[a][b] ==10){
+       // cout << "a" << endl;
         s[a][b] = 0;
+        if(b == 0){
+            int x = 1, y = 8;
+            while(flag[a - x][y] == 0){
+                if(y == 0){
+                    x++;
+                    y = 8;
+                }else{
+                    y--;
+                }
+            }
+            s[a - x][y]++;
+            return dfs(a - x, y);
+        }else{
+            int x = 0, y = 1;
+            while(flag[a - x][b - y] == 0){
+                if(b - y == 0){
+                    x++;
+                    y = b - 8;
+                }else{
+                    y++;
+                }
+            }
+            s[a - x][b - y]++;
+            return dfs(a - x, b - y);
+        }
+    }
+
     
     if(s[a][b] > 10){
         for(int i = 0; i < 9; i++){
@@ -59,7 +99,8 @@ int dfs(int a, int b){
         return 0;
     }
     //s[a][b]が元からあった数字なら
-    if(flag[a][b] == 1){
+    if(flag[a][b] == 0){
+        //cout << "b" << endl;
         //s[8][8]の場合
         if(b == 8 && a == 8){
             //処理を終了
@@ -75,6 +116,7 @@ int dfs(int a, int b){
         }
     //s[a][b]にもともと数字が入っていなかったら
     }else{
+        //cout << "c" << endl;
         //もしますになにも数字が入っていない(この場合ゼロ)だったら
         if(s[a][b] == 0){
             //s[a][b]に1を代入
@@ -104,7 +146,7 @@ int dfs(int a, int b){
                 //もしbが0だったら
                 if(b == 0){
                     //変数x, yを宣言
-                    int x = 0, y = 8;
+                    int x = 1 , y = 8;
                     //最初から入っていた数じゃ無くなるまで繰り返す
                     while(flag[a - x][y] == 0){
                         if(y == 0){
@@ -159,6 +201,7 @@ int main(){
             }
         }
     }
+    cout << endl;
     //深さ優先探索開始
     dfs(0, 0);
     //結果を出力
